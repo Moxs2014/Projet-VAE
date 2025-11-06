@@ -1,0 +1,21 @@
+# Dossiers de build Java
+/target/
+/out/
+
+# Config IDE
+.vscode/
+.idea/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# Fichiers compilés
+*.class
+
+# Maven wrapper (si jamais)
+/.mvn/
