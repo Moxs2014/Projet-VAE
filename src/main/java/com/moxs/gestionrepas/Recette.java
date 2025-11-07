@@ -2,20 +2,26 @@ package com.moxs.gestionrepas;
 
 import java.util.Set;
 import java.util.HashSet;
-import java.util.Objects;
+// import java.util.Objects; Pour plus tard
 
 public class Recette {
     private String nom;
     private Set<Ingredient> ingredients;
     private int tempsPreparation;
     private int nombreDeFoisUtilisee;
+    private TypeRecette type;
+    private boolean preferee;
+    private boolean batchCookable; 
 
 
-    public Recette(String nom, int tempsPreparation, int nombreDeFoisUtilisee) {
+    public Recette(String nom, int tempsPreparation, TypeRecette type, boolean batchCookable, boolean preferee) {
         this.nom = nom;
+        this.type = type;
         this.tempsPreparation = tempsPreparation;
-        this.nombreDeFoisUtilisee = nombreDeFoisUtilisee;
+        this.nombreDeFoisUtilisee = 0;
         this.ingredients = new HashSet<>();
+        this.preferee = preferee;
+        this.batchCookable = batchCookable;
     }
     
     // Getters et setters (facultatifs pour l'instant)
@@ -35,6 +41,19 @@ public class Recette {
         return nombreDeFoisUtilisee;
     }
 
+    public int addNombreDeFoisUtilisee() {
+        return ++ nombreDeFoisUtilisee;
+    }
+
+    public String getType() {
+        return type.toString();
+    }   
+    
+    public TypeRecette getTypeRecette() {
+        return type;
+    }
+
+
     public void ajouterIngredient(Ingredient ingredient) {
             if (ingredient != null) {
         ingredients.add(ingredient);
@@ -43,7 +62,31 @@ public class Recette {
 
     public void supprimerIngredient(Ingredient ingredient) {
         ingredients.remove(ingredient);
-    }   
+    }  
+    
+    public boolean isBatchCookable() {
+        return batchCookable;
+    }
+
+    public String getBatchCookableString() {
+        return batchCookable ? "Yes" : "No";
+    }
+
+    public void setPreferee(boolean preferee) {
+        this.preferee = preferee;
+    }
+
+    public boolean isPreferee() {
+        return preferee;
+    }
+
+    public String getPrefereeToString() {
+        return preferee ? "Yes" : "No";
+    }
+
+    public void setBatchCookable(boolean preferee) {
+        this.preferee = preferee;
+    }
 
     // equals() : définit quand deux recettes sont considérés égaux
     @Override
@@ -65,6 +108,8 @@ public class Recette {
         StringBuilder sb = new StringBuilder();
         sb.append("=== Recette : ").append(nom).append(" ===\n");
         sb.append("Temps de préparation : ").append(tempsPreparation).append(" min\n");
+        sb.append("Batchcookable : ").append(getBatchCookableString()).append("\n");
+        sb.append("Préférée : ").append(getPrefereeToString()).append("\n");
         sb.append("Ingrédients :\n");
 
         for (Ingredient ing : ingredients) {
