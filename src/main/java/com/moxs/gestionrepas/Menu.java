@@ -30,13 +30,14 @@ public class Menu {
 
     public boolean ajouterRecette(Recette recette) {
         if (recette == null) {
+            System.out.println("Veuillez saisir des informations valides");
             return false;
         }
 
         // Règle : max 1 entrée, 1 plat, 1 dessert
         for (Recette r : recettes) {
             if (r.getTypeRecette() == recette.getTypeRecette()) {
-                // Il y a déjà une recette de ce type dans le menu
+                System.out.println("Il y'a déjà une recette de ce type.");
                 return false;
             }
         }
@@ -54,6 +55,17 @@ public class Menu {
         }
         return null;
     }
+
+    public boolean supprimerRecetteParType(TypeRecette type) {
+        if (type == null) return false;
+
+        Recette r = getRecetteParType(type);
+        if (r == null) {
+            return false;
+        }
+        return recettes.remove(r);
+    }
+
     public boolean isComplet() {
         return getRecetteParType(TypeRecette.ENTREE) != null
             && getRecetteParType(TypeRecette.PLAT) != null
