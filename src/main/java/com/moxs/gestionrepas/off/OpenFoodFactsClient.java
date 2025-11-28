@@ -9,17 +9,34 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-//FONCTIONNEL - 11/11/25
+/**
+ * Client permettant d'interroger l'API OpenFoodFacts.
+ * Cette classe sert à :
+ *  - envoyer une requête HTTP à l'API,
+ *  - récupérer le JSON brut,
+ *  - analyser ce JSON pour en extraire un ProduitOff.
+ */
 public class OpenFoodFactsClient {
 
+    /** URL de base utilisée par l'API d'OpenFoodFacts. */
     private static final String BASE_URL_V0 =
             "https://world.openfoodfacts.org/api/v0/product/";
 
+    /** Client HTTP utilisé pour envoyer les requêtes. */
     private final HttpClient httpClient = HttpClient.newHttpClient();
 
+    /** Outil pour lire et analyser le JSON renvoyé par l'API. */
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    // ta méthode existante
+    /**
+     * Envoie une requête HTTP à OpenFoodFacts pour récupérer le JSON brut
+     * correspondant à un code-barres.
+     *
+     * @param codeBarres Le code-barres du produit à rechercher.
+     * @return Le contenu JSON renvoyé par l'API sous forme de chaîne.
+     * @throws IOException Si un problème réseau survient.
+     * @throws InterruptedException Si la requête est interrompue.
+     */
     public String fetchJsonProduit(String codeBarres) throws IOException, InterruptedException {
         String url = BASE_URL_V0 + codeBarres + ".json";
 
@@ -38,9 +55,24 @@ public class OpenFoodFactsClient {
         return response.body();
     }
 
-    // retourne un objet ProduitOff
+    /**
+     * Récupère un produit complet depuis OpenFoodFacts et le transforme
+     * en un objet ProduitOff.
+     *
+     * Cette méthode :
+     *   1. Récupère le JSON via fetchJsonProduit().
+     *   2. Vérifie que le produit existe (status = 1).
+     *   3. Extrait les informations utiles (nom, marque, ingrédients…).
+     *   4. Retourne un objet ProduitOff avec ces données.
+     *
+     * @param codeBarres Le code-barres du produit à rechercher.
+     * @return Un objet ProduitOff contenant les informations principales.
+     * @throws IOException Si un problème réseau survient.
+     * @throws InterruptedException Si la requête est interrompue.
+     * @throws RuntimeException Si le produit est introuvable ou si le JSON est invalide.
+     */
     public ProduitOff fetchProduit(String codeBarres) throws IOException, InterruptedException {
-        String json = fetchJsonProduit(codeBarres); // on réutilise ce que tu as déjà
+        String json = fetchJsonProduit(codeBarres); // Réutilisation de la première méthode
 
         try {
             JsonNode root = objectMapper.readTree(json);

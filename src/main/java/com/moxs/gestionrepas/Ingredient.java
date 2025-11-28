@@ -1,20 +1,18 @@
 package com.moxs.gestionrepas;
 
+import java.util.Set;
+
 /**
  * Représente un ingrédient utilisé dans une recette ou stocké dans le frigo.
- * <p>
  * L'objet est volontairement conçu comme immuable : une fois créé, ses
  * attributs ne peuvent plus être modifiés. Cela évite les incohérences
  * lors de la manipulation des ingrédients dans l'application.
- * </p>
  *
- * <p>
  * L'identité métier d'un ingrédient est uniquement définie par son nom.
  * Deux ingrédients sont donc considérés égaux s'ils ont le même nom,
  * indépendamment de la casse. Ce comportement est indispensable
  * pour garantir l'absence de doublons dans les collections de type
  * {@code Set} et pour permettre l'utilisation de l'objet comme clé dans une {@code Map}.
- * </p>
  */
 
 public class Ingredient {

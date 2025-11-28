@@ -10,7 +10,6 @@ public class CatalogueIngredients {
     private static final List<String> NOMS_INGREDIENTS = new ArrayList<>();
 
     static {
-        // Tu complèteras / modifieras comme tu veux
         NOMS_INGREDIENTS.add("Tomate");
         NOMS_INGREDIENTS.add("Mozzarella");
         NOMS_INGREDIENTS.add("Basilic");

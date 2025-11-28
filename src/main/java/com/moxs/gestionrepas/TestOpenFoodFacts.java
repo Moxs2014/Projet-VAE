@@ -7,13 +7,13 @@ public class TestOpenFoodFacts {
 
     public static void main(String[] args) {
 
-        // 1️⃣ Création du client OpenFoodFacts
+        // Création du client OpenFoodFacts
         OpenFoodFactsClient client = new OpenFoodFactsClient();
 
-        // 2️⃣ Code-barres de test
+        // Code-barres de test
         String codeBarres = "3017624010701"; // Nutella
 
-        // 3️⃣ Appel à l’API et affichage
+        // Appel à l’API et affichage
         try {
             ProduitOff produit = client.fetchProduit(codeBarres);
 

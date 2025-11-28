@@ -9,20 +9,16 @@ import java.util.HashSet;
  * facilitant la gestion dans l'application (préférée, batchcookable,
  * nombre d'utilisations, temps de préparation).
  *
- * <p>
  * La recette contient un ensemble d'ingrédients ({@code Set<Ingredient>})
  * afin d'éviter les doublons. Chaque recette est identifiée
  * de manière métier par son nom : deux recettes portant le même nom
  * sont considérées comme égales, indépendamment de la casse.
  * Cela est utilisé pour garantir l'unicité dans les collections.
- * </p>
  *
- * <p>
  * La collection interne d'ingrédients n'est jamais exposée directement.
  * Une copie défensive est retournée dans {@code getIngredients()}
  * afin de protéger l'intégrité interne de l'objet et empêcher toute
  * modification non contrôlée.
- * </p>
  */
 public class Recette {
 
