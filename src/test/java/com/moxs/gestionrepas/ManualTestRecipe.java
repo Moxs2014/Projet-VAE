@@ -16,11 +16,12 @@ public class ManualTestRecipe {
     applePie.addIngredient(flour);
     applePie.addIngredient(butter);
 
+
     // Increment usage count
     applePie.incrementUsageCount();
 
     // Final display
     System.out.println(applePie.toString());
-
+    System.out.println(flour.toString());
     }   
 }

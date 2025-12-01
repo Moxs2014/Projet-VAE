@@ -19,7 +19,7 @@ public class OpenFoodFactsClient {
 
     /** Base URL used by the OpenFoodFacts API. */
     private static final String BASE_URL_V0 =
-            "https://world.openfoodfacts.org/api/v0/product/";
+            "https://world.openfoodfacts.net/api/v2/product";
 
     /** HTTP client used to send requests. */
     private final HttpClient httpClient = HttpClient.newHttpClient();

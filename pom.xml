@@ -3,11 +3,24 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-
+    <!-- =========================================================================================== -->
+    <!-- Project Information -->
+    <!-- =========================================================================================== -->  
+    <!-- ==== Maven Informations ==== -->
     <groupId>com.moxs</groupId>
     <artifactId>gestionrepas</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <!-- General Information -->
+    <name>Gestion des Repas</name>
+    <description>
+        FR : Cette application a pour but de faciliter la gestion des denrées.
+        ENG : The purpose of this application is to make food management easier.
+    </description>
+
+    <!-- =========================================================================================== -->
+    <!-- Project Properties -->
+    <!-- =========================================================================================== -->  
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
@@ -15,12 +28,18 @@
         <junit.jupiter.version>5.10.0</junit.jupiter.version>
     </properties>
 
+    <!-- =========================================================================================== -->
+    <!-- Project Dependencies -->
+    <!-- =========================================================================================== -->  
     <dependencies>
+
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.17.2</version>
         </dependency>
+
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -28,8 +47,12 @@
             <version>${junit.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
+    <!-- =========================================================================================== -->
+    <!-- Build -->
+    <!-- =========================================================================================== -->  
     <build>
         <plugins>
             <plugin>
