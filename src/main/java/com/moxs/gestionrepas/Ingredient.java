@@ -1,6 +1,5 @@
 package com.moxs.gestionrepas;
 
-import java.util.Set;
 
 /**
  * Représente un ingrédient utilisé dans une recette ou stocké dans le frigo.

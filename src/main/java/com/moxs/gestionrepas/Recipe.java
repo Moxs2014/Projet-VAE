@@ -46,6 +46,12 @@ public class Recette {
     /** Indique si la recette peut être intégrée dans un batch cooking. */
     private boolean batchCookable;
 
+
+    public Recette(String nom, int tempsPreparation) {
+        this.nom = nom;
+        this.tempsPreparation = tempsPreparation;
+        this.ingredients = new HashSet<>(); // Liste interne protégée
+    }
     /**
      * Construit une nouvelle recette.
      *
