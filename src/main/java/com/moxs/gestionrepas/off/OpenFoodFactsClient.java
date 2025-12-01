@@ -1,6 +1,5 @@
 package com.moxs.gestionrepas.off;
 
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
@@ -10,35 +9,35 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 /**
- * Client permettant d'interroger l'API OpenFoodFacts.
- * Cette classe sert à :
- *  - envoyer une requête HTTP à l'API,
- *  - récupérer le JSON brut,
- *  - analyser ce JSON pour en extraire un ProduitOff.
+ * Client used to query the OpenFoodFacts API.
+ * This class is responsible for:
+ *  - sending an HTTP request to the API,
+ *  - retrieving the raw JSON,
+ *  - parsing this JSON to build an OffProduct.
  */
 public class OpenFoodFactsClient {
 
-    /** URL de base utilisée par l'API d'OpenFoodFacts. */
+    /** Base URL used by the OpenFoodFacts API. */
     private static final String BASE_URL_V0 =
             "https://world.openfoodfacts.org/api/v0/product/";
 
-    /** Client HTTP utilisé pour envoyer les requêtes. */
+    /** HTTP client used to send requests. */
     private final HttpClient httpClient = HttpClient.newHttpClient();
 
-    /** Outil pour lire et analyser le JSON renvoyé par l'API. */
+    /** Tool used to read and parse JSON returned by the API. */
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
-     * Envoie une requête HTTP à OpenFoodFacts pour récupérer le JSON brut
-     * correspondant à un code-barres.
+     * Sends an HTTP request to OpenFoodFacts to retrieve the raw JSON
+     * corresponding to a barcode.
      *
-     * @param codeBarres Le code-barres du produit à rechercher.
-     * @return Le contenu JSON renvoyé par l'API sous forme de chaîne.
-     * @throws IOException Si un problème réseau survient.
-     * @throws InterruptedException Si la requête est interrompue.
+     * @param barcode The product barcode to search for.
+     * @return The JSON content returned by the API as a String.
+     * @throws IOException If a network issue occurs.
+     * @throws InterruptedException If the request is interrupted.
      */
-    public String fetchJsonProduit(String codeBarres) throws IOException, InterruptedException {
-        String url = BASE_URL_V0 + codeBarres + ".json";
+    public String fetchProductJson(String barcode) throws IOException, InterruptedException {
+        String url = BASE_URL_V0 + barcode + ".json";
 
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
@@ -49,54 +48,54 @@ public class OpenFoodFactsClient {
                 httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() != 200) {
-            System.out.println("Réponse HTTP non OK : " + response.statusCode());
+            System.out.println("Non-OK HTTP response: " + response.statusCode());
         }
 
         return response.body();
     }
 
     /**
-     * Récupère un produit complet depuis OpenFoodFacts et le transforme
-     * en un objet ProduitOff.
+     * Retrieves a complete product from OpenFoodFacts and maps it
+     * to an OffProduct object.
      *
-     * Cette méthode :
-     *   1. Récupère le JSON via fetchJsonProduit().
-     *   2. Vérifie que le produit existe (status = 1).
-     *   3. Extrait les informations utiles (nom, marque, ingrédients…).
-     *   4. Retourne un objet ProduitOff avec ces données.
+     * This method:
+     *   1. Fetches the JSON via fetchProductJson().
+     *   2. Checks that the product exists (status = 1).
+     *   3. Extracts useful information (name, brand, ingredients…).
+     *   4. Returns an OffProduct built from these data.
      *
-     * @param codeBarres Le code-barres du produit à rechercher.
-     * @return Un objet ProduitOff contenant les informations principales.
-     * @throws IOException Si un problème réseau survient.
-     * @throws InterruptedException Si la requête est interrompue.
-     * @throws RuntimeException Si le produit est introuvable ou si le JSON est invalide.
+     * @param barcode The product barcode to search for.
+     * @return An OffProduct containing the main product information.
+     * @throws IOException If a network issue occurs.
+     * @throws InterruptedException If the request is interrupted.
+     * @throws RuntimeException If the product is not found or JSON is invalid.
      */
-    public ProduitOff fetchProduit(String codeBarres) throws IOException, InterruptedException {
-        String json = fetchJsonProduit(codeBarres); // Réutilisation de la première méthode
+    public OffProduct fetchProduct(String barcode) throws IOException, InterruptedException {
+        String json = fetchProductJson(barcode); // Reuse the first method
 
         try {
             JsonNode root = objectMapper.readTree(json);
 
             int status = root.path("status").asInt(0);
             if (status != 1) {
-                throw new RuntimeException("Produit non trouvé dans Open Food Facts");
+                throw new RuntimeException("Product not found in OpenFoodFacts");
             }
 
             JsonNode product = root.path("product");
 
             String code = product.path("code").asText();
-            String nom = product.path("product_name_fr").asText(
+            String name = product.path("product_name_fr").asText(
                     product.path("product_name").asText()
             );
-            String marque = product.path("brands").asText();
-            String ingredients = product.path("ingredients_text_fr").asText(
+            String brand = product.path("brands").asText();
+            String ingredientsText = product.path("ingredients_text_fr").asText(
                     product.path("ingredients_text").asText()
             );
 
-            return new ProduitOff(code, nom, marque, ingredients);
+            return new OffProduct(code, name, brand, ingredientsText);
 
         } catch (Exception e) {
-            throw new RuntimeException("Erreur de parsing JSON", e);
+            throw new RuntimeException("Error while parsing JSON", e);
         }
     }
 }

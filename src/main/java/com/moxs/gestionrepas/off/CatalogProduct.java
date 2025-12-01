@@ -1,72 +1,69 @@
 package com.moxs.gestionrepas.off;
 
-public class ProduitCatalogue {
+public class CatalogProduct {
 
-    private String codeBarre;
-    private String nomAffiche;
-    private String marque;
-    private int dureeConservationJours;
-    private String notePerso;
-    
+    private String barcode;
+    private String displayName;
+    private String brand;
+    private int shelfLifeDays;
+    private String personalNote;
 
-    // Constructeur vide
-    public ProduitCatalogue() {
+    /**  Empty constructor */
+    public CatalogProduct() {
     }
 
-    // constructeur pratique
-    public ProduitCatalogue(String codeBarre, String nom, String marque, int dureeConservationJours) {
-        this.codeBarre = codeBarre;
-        this.nomAffiche = nom;
-        this.marque = marque;
-        this.dureeConservationJours = dureeConservationJours;
+    /** Convenient constructor */
+    public CatalogProduct(String barcode, String name, String brand, int shelfLifeDays) {
+        this.barcode = barcode;
+        this.displayName = name;
+        this.brand = brand;
+        this.shelfLifeDays = shelfLifeDays;
     }
 
-    // Getters / setters
-    public String getCodeBarre() {
-        return codeBarre;
+    /** Getters / Setters */
+    public String getBarcode() {
+        return barcode;
     }
 
-    public void setCodeBarre(String codeBarre) {
-        this.codeBarre = codeBarre;
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
     }
 
-    public String getNom() {
-        return nomAffiche;
+    public String getName() {
+        return displayName;
     }
 
-    public void setNom(String nomAffiche) {
-        this.nomAffiche = nomAffiche;
+    public void setName(String displayName) {
+        this.displayName = displayName;
     }
 
-    public String getMarque() {
-        return marque;
+    public String getBrand() {
+        return brand;
     }
 
-    public void setMarque(String marque) {
-        this.marque = marque;
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
-    public String getNotePerso() {
-        return notePerso;
+    public String getPersonalNote() {
+        return personalNote;
     }
 
-    public void setIngredientsTexte(String notePerso) {
-        this.notePerso = notePerso;
+    public void setPersonalNote(String personalNote) {
+        this.personalNote = personalNote;
     }
 
-    public String getTempsConservation() {
-
-        return dureeConservationJours + "Jours.";
+    public String getShelfLife() {
+        return shelfLifeDays + " days";
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Produit du Catalogue").append(getNom()).append(" ===\n");
-        sb.append("Code Produit: ").append(getCodeBarre()).append("\n");
-        sb.append("Marque : ").append(getMarque()).append("\n");
-        sb.append("Temps de conservation (en J) : ").append(getTempsConservation()).append("Jours").append("\n");
+        sb.append("Catalog Product: ").append(getName()).append(" ===\n");
+        sb.append("Barcode: ").append(getBarcode()).append("\n");
+        sb.append("Brand: ").append(getBrand()).append("\n");
+        sb.append("Shelf life (days): ").append(shelfLifeDays).append("\n");
         return sb.toString();
     }
-
 }

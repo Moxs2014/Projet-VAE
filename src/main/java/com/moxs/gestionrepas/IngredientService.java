@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Service métier autour des ingrédients.
- * Il utilise un IngredientRepository pour le stockage.
+ * Business service around ingredients.
+ * It relies on an IngredientRepository for storage operations.
  */
 public class IngredientService {
 
@@ -16,35 +16,35 @@ public class IngredientService {
     }
 
     /**
-     * Crée un Ingredient à partir du catalogue (contrôle que le nom existe),
-     * puis le sauvegarde dans le repository.
+     * Creates an Ingredient from the catalog (checks that the name exists),
+     * then saves it in the repository.
      */
-    public Ingredient creerDepuisCatalogue(String nom, int quantite, String unite, String dateLimite) {
-        if (!CatalogueIngredients.existe(nom)) {
-            throw new IllegalArgumentException("Ingrédient inconnu dans le catalogue : " + nom);
+    public Ingredient addFromCatalog(String name, int quantity, String unit, String bestBeforeDate) {
+        if (!IngredientsCatalog.exists(name)) {
+            throw new IllegalArgumentException("Unknown ingredient in catalog: " + name);
         }
-        Ingredient ingr = new Ingredient(nom, quantite, unite, dateLimite);
-        return repository.save(ingr);
+        Ingredient ingredient = new Ingredient(name, quantity, unit, bestBeforeDate);
+        return repository.save(ingredient);
     }
 
     /**
-     * Retourne tous les ingrédients connus du repository.
+     * Returns all ingredients stored in the repository.
      */
-    public List<Ingredient> listerTous() {
+    public List<Ingredient> findAll() {
         return repository.findAll();
     }
 
     /**
-     * Cherche un ingrédient par son nom.
+     * Searches for an ingredient by name.
      */
-    public Optional<Ingredient> chercherParNom(String nom) {
-        return repository.findByNom(nom);
+    public Optional<Ingredient> findByName(String name) {
+        return repository.findByName(name);
     }
 
     /**
-     * Supprime un ingrédient par son nom.
+     * Deletes an ingredient by name.
      */
-    public boolean supprimerParNom(String nom) {
-        return repository.deleteByNom(nom);
+    public boolean deleteByName(String name) {
+        return repository.deleteByName(name);
     }
 }

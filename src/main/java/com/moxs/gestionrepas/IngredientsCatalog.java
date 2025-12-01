@@ -4,41 +4,41 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CatalogueIngredients {
+public class IngredientsCatalog {
 
-    // Liste d'ingrédients "de base" : pas de quantité, pas de DLUO
-    private static final List<String> NOMS_INGREDIENTS = new ArrayList<>();
+    /** List of "basic" ingredients: no quantity, no best-before date */
+    private static final List<String> INGREDIENT_NAMES = new ArrayList<>();
 
     static {
-        NOMS_INGREDIENTS.add("Tomate");
-        NOMS_INGREDIENTS.add("Mozzarella");
-        NOMS_INGREDIENTS.add("Basilic");
-        NOMS_INGREDIENTS.add("Pain");
-        NOMS_INGREDIENTS.add("Beurre");
-        NOMS_INGREDIENTS.add("Œuf");
-        NOMS_INGREDIENTS.add("Poulet");
-        NOMS_INGREDIENTS.add("Riz");
-        NOMS_INGREDIENTS.add("Pâtes");
-        NOMS_INGREDIENTS.add("Crème fraîche");
-        NOMS_INGREDIENTS.add("Champignon");
-        NOMS_INGREDIENTS.add("Fromage râpé");
-        NOMS_INGREDIENTS.add("Farine");
-        NOMS_INGREDIENTS.add("Sucre");
-        NOMS_INGREDIENTS.add("Chocolat noir");
-        NOMS_INGREDIENTS.add("Lait");
-        NOMS_INGREDIENTS.add("Vanille");
+        INGREDIENT_NAMES.add("Tomato");
+        INGREDIENT_NAMES.add("Mozzarella");
+        INGREDIENT_NAMES.add("Basil");
+        INGREDIENT_NAMES.add("Bread");
+        INGREDIENT_NAMES.add("Butter");
+        INGREDIENT_NAMES.add("Egg");
+        INGREDIENT_NAMES.add("Chicken");
+        INGREDIENT_NAMES.add("Rice");
+        INGREDIENT_NAMES.add("Pasta");
+        INGREDIENT_NAMES.add("Fresh Cream");
+        INGREDIENT_NAMES.add("Mushroom");
+        INGREDIENT_NAMES.add("Grated Cheese");
+        INGREDIENT_NAMES.add("Flour");
+        INGREDIENT_NAMES.add("Sugar");
+        INGREDIENT_NAMES.add("Dark Chocolate");
+        INGREDIENT_NAMES.add("Milk");
+        INGREDIENT_NAMES.add("Vanilla");
     }
 
-    // Récupérer tous les noms d'ingrédients disponibles
-    public static List<String> getTousLesNoms() {
-        return Collections.unmodifiableList(NOMS_INGREDIENTS);
+    /** Returns all available ingredient names. */
+    public static List<String> getAllNames() {
+        return Collections.unmodifiableList(INGREDIENT_NAMES);
     }
 
-    // Vérifier si un nom existe dans le catalogue
-    public static boolean existe(String nom) {
-        if (nom == null) return false;
-        for (String n : NOMS_INGREDIENTS) {
-            if (n.equalsIgnoreCase(nom)) {
+    /** Checks whether a name exists in the catalog. */
+    public static boolean exists(String name) {
+        if (name == null) return false;
+        for (String n : INGREDIENT_NAMES) {
+            if (n.equalsIgnoreCase(name)) {
                 return true;
             }
         }
@@ -46,13 +46,13 @@ public class CatalogueIngredients {
     }
 
     /**
-     * Fabrique un Ingredient "concret" à partir du catalogue,
-     * en lui ajoutant une quantité, une unité et une date limite.
+     * Creates a concrete Ingredient using the catalog entry,
+     * adding a quantity, unit and best-before date.
      */
-    public static Ingredient creerIngredient(String nom, int quantite, String unite, String dateLimite) {
-        if (!existe(nom)) {
-            throw new IllegalArgumentException("Ingrédient inconnu dans le catalogue : " + nom);
+    public static Ingredient createIngredient(String name, int quantity, String unit, String bestBeforeDate) {
+        if (!exists(name)) {
+            throw new IllegalArgumentException("Unknown ingredient in catalog: " + name);
         }
-        return new Ingredient(nom, quantite, unite, dateLimite);
+        return new Ingredient(name, quantity, unit, bestBeforeDate);
     }
 }

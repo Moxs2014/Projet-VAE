@@ -3,39 +3,54 @@ package com.moxs.gestionrepas;
 import java.util.*;
 
 /**
- * Implémentation simple en mémoire de IngredientRepository.
- * Utilise une Map<String, Ingredient> indexée par le nom (en lowercase).
+ * Simple in-memory implementation of IngredientRepository.
+ * Uses a Map<String, Ingredient> indexed by the name (lowercased).
  */
 public class InMemoryIngredientRepository implements IngredientRepository {
 
     private final Map<String, Ingredient> ingredients = new HashMap<>();
 
+    /**
+     * Searches for an ingredient by its name.
+     * Returns an Optional that may be empty if nothing is found.
+     */
     @Override
-    public Optional<Ingredient> findByNom(String nom) {
-        if (nom == null) {
+    public Optional<Ingredient> findByName(String name) {
+        if (name == null) {
             return Optional.empty();
         }
-        return Optional.ofNullable(ingredients.get(nom.toLowerCase()));
+        return Optional.ofNullable(ingredients.get(name.toLowerCase()));
     }
 
+    /**
+     * Returns all known ingredients from the repository.
+     */
     @Override
     public List<Ingredient> findAll() {
         return new ArrayList<>(ingredients.values());
     }
 
+    /**
+     * Saves an ingredient (creation or update).
+     * Returns the saved ingredient.
+     */
     @Override
     public Ingredient save(Ingredient ingredient) {
-        if (ingredient == null || ingredient.getNom() == null) {
-            throw new IllegalArgumentException("Ingredient et son nom ne doivent pas être null");
+        if (ingredient == null || ingredient.getName() == null) {
+            throw new IllegalArgumentException("Ingredient and its name must not be null");
         }
-        // clé = nom en lowercase pour éviter les soucis de casse
-        ingredients.put(ingredient.getNom().toLowerCase(), ingredient);
+        // Key = lowercased name to avoid case sensitivity issues
+        ingredients.put(ingredient.getName().toLowerCase(), ingredient);
         return ingredient;
     }
 
+    /**
+     * Deletes an ingredient by its name.
+     * Returns true if something was removed, false otherwise.
+     */
     @Override
-    public boolean deleteByNom(String nom) {
-        if (nom == null) return false;
-        return ingredients.remove(nom.toLowerCase()) != null;
+    public boolean deleteByName(String name) {
+        if (name == null) return false;
+        return ingredients.remove(name.toLowerCase()) != null;
     }
 }

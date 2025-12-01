@@ -4,222 +4,210 @@ import java.util.Set;
 import java.util.HashSet;
 
 /**
- * Représente une recette composée d'un nom, d'un ensemble d'ingrédients,
- * d'un type (entrée, plat, dessert...), et de plusieurs attributs
- * facilitant la gestion dans l'application (préférée, batchcookable,
- * nombre d'utilisations, temps de préparation).
+ * Represents a recipe composed of a name, a set of ingredients,
+ * a type (starter, main dish, dessert...), and various attributes
+ * that make the application easier to manage (favorite, batch-cookable,
+ * number of uses, preparation time).
  *
- * La recette contient un ensemble d'ingrédients ({@code Set<Ingredient>})
- * afin d'éviter les doublons. Chaque recette est identifiée
- * de manière métier par son nom : deux recettes portant le même nom
- * sont considérées comme égales, indépendamment de la casse.
- * Cela est utilisé pour garantir l'unicité dans les collections.
+ * The recipe contains a Set of ingredients ({@code Set<Ingredient>})
+ * to avoid duplicates. A recipe is identified by its name: two recipes
+ * with the same name are considered equal (case-insensitive). This ensures
+ * uniqueness in collections.
  *
- * La collection interne d'ingrédients n'est jamais exposée directement.
- * Une copie défensive est retournée dans {@code getIngredients()}
- * afin de protéger l'intégrité interne de l'objet et empêcher toute
- * modification non contrôlée.
+ * The internal ingredients collection is never exposed directly.
+ * A defensive copy is returned from {@code getIngredients()} to protect
+ * the internal integrity of the object.
  */
-public class Recette {
+public class Recipe {
 
-    /** Nom de la recette (sert d'identité métier). */
-    private String nom;
+    /** Name of the recipe (business identity). */
+    private String name;
 
     /**
-     * Ensemble d'ingrédients constituant la recette.
-     * Utilisé pour éviter les doublons grâce à equals/hashCode.
+     * Set of ingredients that compose the recipe.
+     * A HashSet is used to avoid duplicates (relies on Ingredient.equals/hashCode).
      */
     private Set<Ingredient> ingredients;
 
-    /** Temps nécessaire pour préparer la recette (en minutes). */
-    private int tempsPreparation;
+    /** Preparation time in minutes. */
+    private int preparationTime;
 
-    /** Nombre de fois où la recette a été cuisinée (statistique interne). */
-    private int nombreDeFoisUtilisee;
+    /** Number of times this recipe has been made (internal statistic). */
+    private int usageCount;
 
-    /** Type de recette (ex : ENTREE, PLAT, DESSERT). */
-    private TypeRecette type;
+    /** Recipe type (e.g. STARTER, MAIN, DESSERT). */
+    private RecipeType type;
 
-    /** Indique si la recette fait partie des recettes préférées par l'utilisateur. */
-    private boolean preferee;
+    /** Indicates whether the recipe is marked as a user favorite. */
+    private boolean favorite;
 
-    /** Indique si la recette peut être intégrée dans un batch cooking. */
+    /** Indicates whether the recipe can be batch-cooked. */
     private boolean batchCookable;
 
-
-    public Recette(String nom, int tempsPreparation) {
-        this.nom = nom;
-        this.tempsPreparation = tempsPreparation;
-        this.ingredients = new HashSet<>(); // Liste interne protégée
-    }
     /**
-     * Construit une nouvelle recette.
+     * Builds a new recipe.
      *
-     * @param nom               nom de la recette (identité métier)
-     * @param tempsPreparation  temps nécessaire à la préparation (en minutes)
-     * @param type              type de la recette (entrée, plat...)
-     * @param batchCookable     true si la recette peut être batchcookée
-     * @param preferee          true si la recette est marquée comme préférée
+     * @param name             recipe name (business identity)
+     * @param preparationTime  preparation time in minutes
+     * @param type             recipe type (starter, main, dessert...)
+     * @param batchCookable    true if the recipe can be batch-cooked
+     * @param favorite         true if the recipe is marked as a favorite
      */
-    public Recette(String nom, int tempsPreparation, TypeRecette type,
-                   boolean batchCookable, boolean preferee) {
+    public Recipe(String name, int preparationTime, RecipeType type,
+                  boolean batchCookable, boolean favorite) {
 
-        this.nom = nom;
+        this.name = name;
         this.type = type;
-        this.tempsPreparation = tempsPreparation;
-        this.nombreDeFoisUtilisee = 0;
-        this.ingredients = new HashSet<>(); // Liste interne protégée
-        this.preferee = preferee;
+        this.preparationTime = preparationTime;
+        this.usageCount = 0;
+        this.ingredients = new HashSet<>();
+        this.favorite = favorite;
         this.batchCookable = batchCookable;
     }
 
-    /** @return nom de la recette */
-    public String getNom() {
-        return nom;
+    /** @return the recipe name */
+    public String getName() {
+        return name;
     }
 
     /**
-     * Retourne une copie défensive des ingrédients.
-     * Empêche l'appelant de modifier directement la structure interne.
+     * Returns a defensive copy of the ingredients.
      *
-     * @return un nouvel ensemble contenant les ingrédients de la recette
+     * @return a new Set containing the recipe's ingredients
      */
     public Set<Ingredient> getIngredients() {
         return new HashSet<>(ingredients);
     }
 
-    /** @return temps de préparation en minutes */
-    public int getTempsPreparation() {
-        return tempsPreparation;
+    /** @return preparation time in minutes */
+    public int getPreparationTime() {
+        return preparationTime;
     }
 
-    /** @return nombre de fois où la recette a été utilisée */
-    public int getNombreDeFoisUtilisee() {
-        return nombreDeFoisUtilisee;
+    /** @return number of times the recipe has been used */
+    public int getUsageCount() {
+        return usageCount;
     }
 
     /**
-     * Incrémente le compteur d'utilisation.
+     * Increments the usage counter.
      *
-     * @return nouveau nombre d'utilisations
+     * @return updated usage count
      */
-    public int addNombreDeFoisUtilisee() {
-        return ++nombreDeFoisUtilisee;
+    public int incrementUsageCount() {
+        return ++usageCount;
     }
 
-    /** @return type de recette sous forme de texte */
+    /** @return the recipe type as text */
     public String getType() {
         return type.toString();
     }
 
-    /** @return l'énumération TypeRecette brute */
-    public TypeRecette getTypeRecette() {
+    /** @return the RecipeType enum value */
+    public RecipeType getRecipeType() {
         return type;
     }
 
     /**
-     * Ajoute un ingrédient à la recette.
-     * L'utilisation d'un HashSet évite automatiquement les doublons.
+     * Adds an ingredient to the recipe.
+     * Duplicates are automatically avoided by the HashSet.
      *
-     * @param ingredient ingrédient à ajouter
+     * @param ingredient ingredient to add
      */
-    public void ajouterIngredient(Ingredient ingredient) {
+    public void addIngredient(Ingredient ingredient) {
         if (ingredient != null) {
             ingredients.add(ingredient);
         }
     }
 
     /**
-     * Supprime un ingrédient de la recette s'il est présent.
+     * Removes an ingredient from the recipe if present.
      *
-     * @param ingredient ingrédient à retirer
+     * @param ingredient ingredient to remove
      */
-    public void supprimerIngredient(Ingredient ingredient) {
+    public void removeIngredient(Ingredient ingredient) {
         ingredients.remove(ingredient);
     }
 
-    /** @return true si la recette peut être préparée en batch cooking */
+    /** @return true if the recipe is batch-cookable */
     public boolean isBatchCookable() {
         return batchCookable;
     }
 
-    /** @return "Yes" ou "No" pour affichage lisible */
+    /** @return "Yes" or "No" depending on batch-cookable status */
     public String getBatchCookableString() {
         return batchCookable ? "Yes" : "No";
     }
 
-    /** Change l'état batchcookable de la recette. */
+    /** Changes the batch-cookable status. */
     public void setBatchCookable(boolean batchCookable) {
         this.batchCookable = batchCookable;
     }
 
-    /** @return true si la recette est préférée */
-    public boolean isPreferee() {
-        return preferee;
+    /** @return true if the recipe is a favorite */
+    public boolean isFavorite() {
+        return favorite;
     }
 
-    /** Modifie l'état de préférence. */
-    public void setPreferee(boolean preferee) {
-        this.preferee = preferee;
+    /** Changes the favorite status. */
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 
-    /** @return "Yes" ou "No" selon si la recette est préférée */
-    public String getPrefereeToString() {
-        return preferee ? "Yes" : "No";
+    /** @return "Yes" or "No" depending on favorite status */
+    public String getFavoriteString() {
+        return favorite ? "Yes" : "No";
     }
 
     /**
-     * Égalité métier : deux recettes sont égales si elles partagent
-     * le même nom, indépendamment de la casse.
-     *
-     * @param o objet à comparer
-     * @return true si les deux recettes ont le même nom
+     * Business equality: two recipes are equal if they share the same name,
+     * ignoring case.
+     * 
+     * @param o the object to compare with this recipe
+     * @return true if both objects represent the same recipe name
      */
     @Override
     public boolean equals(Object o) {
 
-        // Même référence → même recette
+        /** Same reference → same recipe */
         if (this == o) return true;
 
-        // On ne compare que des Recette
-        if (!(o instanceof Recette)) return false;
+        /** We only compare Recipe instances */
+        if (!(o instanceof Recipe)) return false;
 
-        Recette that = (Recette) o;
+        /** Safe cast after instanceof: allows accessing Recipe properties */
+        Recipe that = (Recipe) o;
 
-        // Règle métier d'unicité : le nom
-        return this.nom != null && this.nom.equalsIgnoreCase(that.nom);
+        /** Business rule: same name (ignore case) */
+        return this.name != null && this.name.equalsIgnoreCase(that.name);
     }
 
     /**
-     * Fournit un hash cohérent avec equals(), basé sur le nom.
-     *
-     * @return hash numérique de la recette
+     * Provides a hash consistent with equals(), based on the name.
      */
     @Override
     public int hashCode() {
-        return nom == null ? 0 : nom.toLowerCase().hashCode();
+        return name == null ? 0 : name.toLowerCase().hashCode();
     }
 
     /**
-     * Retourne une représentation textuelle complète de la recette :
-     * nom, temps de préparation, ingrédients, préférences, etc.
-     *
-     * @return chaîne lisible représentant la recette
+     * Returns a human-readable representation of the recipe:
+     * name, preparation time, ingredients, favorite, batch-cookable, etc.
      */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("=== Recette : ").append(nom).append(" ===\n");
-        sb.append("Temps de préparation : ").append(tempsPreparation).append(" min\n");
-        sb.append("Batchcookable : ").append(getBatchCookableString()).append("\n");
-        sb.append("Préférée : ").append(getPrefereeToString()).append("\n");
-        sb.append("Ingrédients :\n");
+        sb.append("=== Recipe: ").append(name).append(" ===\n");
+        sb.append("Preparation time: ").append(preparationTime).append(" min\n");
+        sb.append("Batch-cookable: ").append(getBatchCookableString()).append("\n");
+        sb.append("Favorite: ").append(getFavoriteString()).append("\n");
+        sb.append("Ingredients:\n");
 
         for (Ingredient ing : ingredients) {
             sb.append(" - ").append(ing).append("\n");
         }
 
-        sb.append("Utilisée ").append(nombreDeFoisUtilisee).append(" fois\n");
+        sb.append("Used ").append(usageCount).append(" times\n");
 
         return sb.toString();
     }

@@ -1,64 +1,64 @@
 package com.moxs.gestionrepas.off;
 
-public class ProduitOff {
+public class OffProduct {
 
-    private String codeBarres;
-    private String nom;
-    private String marque;
-    private String ingredientsTexte;
+    private String barcode;
+    private String name;
+    private String brand;
+    private String ingredientsText;
 
-    // Constructeur vide (Jackson ou toi pourront l'utiliser)
-    public ProduitOff() {
+    // Empty constructor (used by Jackson or by you)
+    public OffProduct() {
     }
 
-    // Optionnel : constructeur pratique
-    public ProduitOff(String codeBarres, String nom, String marque, String ingredientsTexte) {
-        this.codeBarres = codeBarres;
-        this.nom = nom;
-        this.marque = marque;
-        this.ingredientsTexte = ingredientsTexte;
+    // Optional: convenient constructor
+    public OffProduct(String barcode, String name, String brand, String ingredientsText) {
+        this.barcode = barcode;
+        this.name = name;
+        this.brand = brand;
+        this.ingredientsText = ingredientsText;
     }
 
     // Getters / setters
-    public String getCodeBarres() {
-        return codeBarres;
+    public String getBarcode() {
+        return barcode;
     }
 
-    public void setCodeBarres(String codeBarres) {
-        this.codeBarres = codeBarres;
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
     }
 
-    public String getNom() {
-        return nom;
+    public String getName() {
+        return name;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getMarque() {
-        return marque;
+    public String getBrand() {
+        return brand;
     }
 
-    public void setMarque(String marque) {
-        this.marque = marque;
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
-    public String getIngredientsTexte() {
-        return ingredientsTexte;
+    public String getIngredientsText() {
+        return ingredientsText;
     }
 
-    public void setIngredientsTexte(String ingredientsTexte) {
-        this.ingredientsTexte = ingredientsTexte;
+    public void setIngredientsText(String ingredientsText) {
+        this.ingredientsText = ingredientsText;
     }
 
     @Override
     public String toString() {
-        return "ProduitOff{" +
-                "codeBarres='" + codeBarres + '\'' +
-                ", nom='" + nom + '\'' +
-                ", marque='" + marque + '\'' +
-                ", ingredientsTexte='" + ingredientsTexte + '\'' +
+        return "OffProduct{" +
+                "barcode='" + barcode + '\'' +
+                ", name='" + name + '\'' +
+                ", brand='" + brand + '\'' +
+                ", ingredientsText='" + ingredientsText + '\'' +
                 '}';
     }
 }

@@ -4,84 +4,84 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Représente un menu composé de recettes.
- * Un menu peut contenir au maximum une entrée, un plat et un dessert.
+ * Represents a menu composed of recipes.
+ * A menu can contain at most one starter, one main course and one dessert.
  *
- * Cette classe illustre l'utilisation d'un Set pour éviter les doublons
- * et met en place quelques règles métier simples lors de l'ajout des recettes.
+ * This class illustrates the use of a Set to avoid duplicates
+ * and enforces a few simple business rules when adding recipes.
  */
 public class Menu {
 
-    /** Nom du menu */
-    private String nom;
+    /** Name of the menu. */
+    private String name;
 
-    /** Ensemble des recettes du menu. */
-    private Set<Recette> recettes;
-
-    /**
-     * Constructeur : un menu est créé vide et identifié par son nom.
-     *
-     * @param nom nom du menu
-     */
-    public Menu(String nom) {
-        this.nom = nom;
-        this.recettes = new HashSet<>();
-    }
-
-    /** @return le nom du menu */
-    public String getNom() {
-        return nom;
-    }
-
-    /** Modifie le nom du menu. */
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
+    /** Set of recipes in the menu. */
+    private Set<Recipe> recipes;
 
     /**
-     * Retourne une copie du Set afin de protéger la liste interne.
-     * Cela évite qu'un appelant puisse modifier directement le contenu.
+     * Constructor: a menu is created empty and identified by its name.
      *
-     * @return une copie des recettes du menu
+     * @param name name of the menu
      */
-    public Set<Recette> getRecettes() {
-        return new HashSet<>(recettes);
+    public Menu(String name) {
+        this.name = name;
+        this.recipes = new HashSet<>();
+    }
+
+    /** @return the name of the menu */
+    public String getName() {
+        return name;
+    }
+
+    /** Modifies the name of the menu. */
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
-     * Ajoute une recette dans le menu. On applique ici une règle métier :
-     * il ne doit pas y avoir deux recettes du même type (ex : deux entrées).
+     * Returns a copy of the Set in order to protect the internal collection.
+     * This prevents callers from directly modifying the internal state.
      *
-     * @param recette recette à ajouter
-     * @return true si l'ajout a réussi, false sinon
+     * @return a copy of the recipes in the menu
      */
-    public boolean ajouterRecette(Recette recette) {
-        if (recette == null) {
-            System.out.println("Veuillez saisir des informations valides");
+    public Set<Recipe> getRecipes() {
+        return new HashSet<>(recipes);
+    }
+
+    /**
+     * Adds a recipe to the menu. A business rule is applied:
+     * there must not be two recipes of the same type (e.g. two starters).
+     *
+     * @param recipe recipe to add
+     * @return true if the addition succeeded, false otherwise
+     */
+    public boolean addRecipe(Recipe recipe) {
+        if (recipe == null) {
+            System.out.println("Please provide valid information.");
             return false;
         }
 
-        // Vérifie s'il existe déjà une recette du même type
-        for (Recette r : recettes) {
-            if (r.getTypeRecette() == recette.getTypeRecette()) {
-                System.out.println("Il y'a déjà une recette de ce type.");
+        // Check if there is already a recipe of the same type
+        for (Recipe r : recipes) {
+            if (r.getRecipeType() == recipe.getRecipeType()) {
+                System.out.println("There is already a recipe of this type.");
                 return false;
             }
         }
 
-        return recettes.add(recette);
+        return recipes.add(recipe);
     }
 
     /**
-     * Retourne la recette correspondant au type demandé.
+     * Returns the recipe corresponding to the requested type.
      *
-     * @param type type de recette (ENTREE, PLAT, DESSERT)
-     * @return la recette si elle existe, sinon null
+     * @param type recipe type (STARTER, MAIN, DESSERT)
+     * @return the recipe if it exists, otherwise null
      */
-    public Recette getRecetteParType(TypeRecette type) {
+    public Recipe getRecipeByType(RecipeType type) {
         if (type == null) return null;
-        for (Recette r : recettes) {
-            if (r.getTypeRecette() == type) {
+        for (Recipe r : recipes) {
+            if (r.getRecipeType() == type) {
                 return r;
             }
         }
@@ -89,50 +89,48 @@ public class Menu {
     }
 
     /**
-     * Supprime la recette associée au type demandé.
+     * Removes the recipe associated with the requested type.
      *
-     * @param type type de recette à supprimer
-     * @return true si la suppression a été faite, false sinon
+     * @param type recipe type to remove
+     * @return true if the removal was performed, false otherwise
      */
-    public boolean supprimerRecetteParType(TypeRecette type) {
+    public boolean removeRecipeByType(RecipeType type) {
         if (type == null) return false;
 
-        Recette r = getRecetteParType(type);
+        Recipe r = getRecipeByType(type);
         if (r == null) {
             return false;
         }
-        return recettes.remove(r);
+        return recipes.remove(r);
     }
 
     /**
-     * Vérifie si le menu contient bien les trois types de recettes.
+     * Checks whether the menu contains the three types of recipes.
      *
-     * @return true si le menu est complet
+     * @return true if the menu is complete
      */
     public boolean isFull() {
-        return getRecetteParType(TypeRecette.ENTREE) != null
-            && getRecetteParType(TypeRecette.PLAT) != null
-            && getRecetteParType(TypeRecette.DESSERT) != null;
+        return getRecipeByType(RecipeType.STARTER) != null
+            && getRecipeByType(RecipeType.MAIN) != null
+            && getRecipeByType(RecipeType.DESSERT) != null;
     }
 
     /**
-     * Affichage lisible du menu : entrée, plat et dessert.
+     * Human-readable display of the menu: starter, main and dessert.
      */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("=== Menu : ").append(nom).append(" ===\n");
+        sb.append("=== Menu: ").append(name).append(" ===\n");
 
-        Recette entree = getRecetteParType(TypeRecette.ENTREE);
-        Recette plat = getRecetteParType(TypeRecette.PLAT);
-        Recette dessert = getRecetteParType(TypeRecette.DESSERT);
+        Recipe starter = getRecipeByType(RecipeType.STARTER);
+        Recipe main = getRecipeByType(RecipeType.MAIN);
+        Recipe dessert = getRecipeByType(RecipeType.DESSERT);
 
-        sb.append("Entrée  : ").append(entree != null ? entree.getNom() : "— Aucune —").append("\n");
-        sb.append("Plat    : ").append(plat != null ? plat.getNom() : "— Aucune —").append("\n");
-        sb.append("Dessert : ").append(dessert != null ? dessert.getNom() : "— Aucune —").append("\n");
+        sb.append("Starter : ").append(starter != null ? starter.getName() : "— None —").append("\n");
+        sb.append("Main    : ").append(main != null ? main.getName() : "— None —").append("\n");
+        sb.append("Dessert : ").append(dessert != null ? dessert.getName() : "— None —").append("\n");
 
         return sb.toString();
     }
 }
-
-

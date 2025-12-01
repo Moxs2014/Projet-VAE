@@ -1,46 +1,44 @@
 package com.moxs.gestionrepas;
 
 /**
- * Représente les différents types de recettes possibles dans l'application.
+ * Represents the different recipe types available in the application.
  *
- * <p>Chaque type dispose d'un libellé d'affichage personnalisé
- * (par exemple "Entrée" au lieu de ENTREE) afin de permettre une
- * présentation plus lisible dans les interfaces utilisateurs
- * ou dans les méthodes {@code toString()} des autres classes.</p>
+ * <p>Each type has a readable display label (e.g. "Starter" instead of STARTER)
+ * to provide a more user-friendly presentation in user interfaces or
+ * {@code toString()} methods.</p>
  *
  * <p>
- * L'utilisation d'une énumération garantit que les types de recettes
- * sont limités, cohérents et centralisés. Cela évite les erreurs de
- * saisie (ex : "plat", "Plat", "PLAT", "plta") et facilite les
- * comparaisons : un {@code TypeRecette} est toujours un des trois
- * types définis ici.
+ * Using an enumeration guarantees that recipe types are limited, consistent,
+ * and centralized. This avoids typing errors (e.g. "main", "Main", "MAIN", "maim")
+ * and simplifies comparisons: a {@code RecipeType} is always one of the
+ * defined values below.
  * </p>
  */
-public enum TypeRecette {
+public enum RecipeType {
 
-    ENTREE("Entrée"),
-    PLAT("Plat"),
+    STARTER("Starter"),
+    MAIN("Main dish"),
     DESSERT("Dessert");
 
-    /** Libellé lisible correspondant au type. */
-    private final String affichage;
+    /** Human-readable label corresponding to the type. */
+    private final String label;
 
     /**
-     * Constructeur interne à l'énumération.
+     * Internal constructor for the enumeration.
      *
-     * @param affichage libellé lisible pour ce type de recette
+     * @param label readable label for this recipe type
      */
-    TypeRecette(String affichage) {
-        this.affichage = affichage;
+    RecipeType(String label) {
+        this.label = label;
     }
 
     /**
-     * Retourne le libellé lisible correspondant au type de recette.
+     * Returns the readable label of the recipe type.
      *
-     * @return une chaîne représentant le type (ex : "Entrée").
+     * @return a human-readable string (e.g. "Starter")
      */
     @Override
     public String toString() {
-        return affichage;
+        return label;
     }
 }

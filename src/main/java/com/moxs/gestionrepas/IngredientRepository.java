@@ -4,30 +4,41 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Contrat pour accéder aux ingrédients (peu importe où ils sont stockés).
+ * Contract for accessing ingredients regardless of where they are stored.
  */
 public interface IngredientRepository {
 
     /**
-     * Recherche un ingrédient par son nom.
-     * Retourne un Optional qui peut être vide si rien n'est trouvé.
+     * Searches for an ingredient by its name.
+     * Returns an Optional that may be empty if no match is found.
+     *
+     * @param name the name of the ingredient to search for
+     * @return an Optional containing the ingredient, or empty if not found
      */
-    Optional<Ingredient> findByNom(String nom);
+    Optional<Ingredient> findByName(String name);
 
     /**
-     * Retourne tous les ingrédients connus du repository.
+     * Returns all known ingredients from the repository.
+     *
+     * @return a list of all ingredients
      */
     List<Ingredient> findAll();
 
     /**
-     * Sauvegarde un ingrédient (création ou mise à jour).
-     * Retourne l'ingrédient sauvegardé.
+     * Saves an ingredient (creation or update).
+     * Returns the saved ingredient.
+     *
+     * @param ingredient the ingredient to save
+     * @return the saved ingredient
      */
     Ingredient save(Ingredient ingredient);
 
     /**
-     * Supprime un ingrédient par son nom.
-     * Retourne true si quelque chose a été supprimé, false sinon.
+     * Deletes an ingredient by its name.
+     * Returns true if something was removed, false otherwise.
+     *
+     * @param name the name of the ingredient to delete
+     * @return true if deletion occurred, false otherwise
      */
-    boolean deleteByNom(String nom);
+    boolean deleteByName(String name);
 }

@@ -1,27 +1,27 @@
 package com.moxs.gestionrepas;
 
+import com.moxs.gestionrepas.off.OffProduct;
 import com.moxs.gestionrepas.off.OpenFoodFactsClient;
-import com.moxs.gestionrepas.off.ProduitOff;
 
 public class TestOpenFoodFacts {
 
     public static void main(String[] args) {
 
-        // Création du client OpenFoodFacts
+        // Create the OpenFoodFacts client
         OpenFoodFactsClient client = new OpenFoodFactsClient();
 
-        // Code-barres de test
-        String codeBarres = "3017624010701"; // Nutella
+        // Test barcode
+        String barcode = "3017624010701"; // Nutella
 
-        // Appel à l’API et affichage
+        // API call and display
         try {
-            ProduitOff produit = client.fetchProduit(codeBarres);
+            OffProduct product = client.fetchProduct(barcode);
 
-            System.out.println("=== Produit récupéré ===");
-            System.out.println(produit); // utilise le toString() défini dans ProduitOff
+            System.out.println("=== Retrieved product ===");
+            System.out.println(product); // uses toString() defined in OffProduct
 
         } catch (Exception e) {
-            System.err.println("Erreur lors de la récupération du produit : " + e.getMessage());
+            System.err.println("Error while retrieving the product: " + e.getMessage());
             e.printStackTrace();
         }
     }
