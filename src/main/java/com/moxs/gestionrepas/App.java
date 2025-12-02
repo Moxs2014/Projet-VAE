@@ -1,5 +1,6 @@
 package com.moxs.gestionrepas;
 
+import com.moxs.gestionrepas.domain.*;
 
 public class App {
     

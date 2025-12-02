@@ -1,7 +1,7 @@
 package com.moxs.gestionrepas;
 
-import com.moxs.gestionrepas.off.OffProduct;
-import com.moxs.gestionrepas.off.OpenFoodFactsClient;
+import com.moxs.gestionrepas.APIOff.OffProduct;
+import com.moxs.gestionrepas.APIOff.OpenFoodFactsClient;
 
 public class TestOpenFoodFacts {
 

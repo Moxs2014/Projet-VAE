@@ -1,8 +1,10 @@
-package com.moxs.gestionrepas;
+package com.moxs.gestionrepas.catalog;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import com.moxs.gestionrepas.domain.Ingredient;
 
 public class IngredientsCatalog {
 

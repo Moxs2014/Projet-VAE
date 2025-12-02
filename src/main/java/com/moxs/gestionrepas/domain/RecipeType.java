@@ -1,4 +1,5 @@
-package com.moxs.gestionrepas;
+package com.moxs.gestionrepas.domain;
+
 
 /**
  * Represents the different recipe types available in the application.

@@ -1,7 +1,11 @@
-package com.moxs.gestionrepas;
+package com.moxs.gestionrepas.service;
 
 import java.util.List;
 import java.util.Optional;
+
+import com.moxs.gestionrepas.catalog.IngredientsCatalog;
+import com.moxs.gestionrepas.domain.Ingredient;
+import com.moxs.gestionrepas.repository.IngredientRepository;
 
 /**
  * Business service around ingredients.

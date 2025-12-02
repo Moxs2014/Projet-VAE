@@ -1,6 +1,9 @@
 package com.moxs.gestionrepas;
 
 import org.junit.jupiter.api.Test;
+
+import com.moxs.gestionrepas.domain.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class IngredientTest {
@@ -12,6 +15,8 @@ public class IngredientTest {
 
         assertEquals(i1, i2);
     }
+
+
 }
 
 

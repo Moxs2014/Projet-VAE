@@ -1,5 +1,7 @@
 package com.moxs.gestionrepas;
 
+import com.moxs.gestionrepas.domain.*;
+
 public class ManualTestRecipe {
 
     public static void main(String[] args) {

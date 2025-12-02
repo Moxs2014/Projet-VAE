@@ -1,4 +1,4 @@
-package com.moxs.gestionrepas;
+package com.moxs.gestionrepas.domain;
 
 /**
  * Represents an ingredient used in a recipe or stored in the fridge.
@@ -73,16 +73,16 @@ public class Ingredient {
     @Override
     public boolean equals(Object o) {
 
-        /** Fast check: same object in memory */
+        /* Fast check: same object in memory */
         if (this == o) return true;
 
-        /** We only compare Ingredient instances */
+        /* We only compare Ingredient instances */
         if (!(o instanceof Ingredient)) return false;
 
-        /** Cast to access the fields */
+        /* Cast to access the fields */
         Ingredient that = (Ingredient) o;
 
-        /** Business rule: same name (ignore case) */
+        /* Business rule: same name (ignore case) */
         return this.name != null && this.name.equalsIgnoreCase(that.name);
     }
 

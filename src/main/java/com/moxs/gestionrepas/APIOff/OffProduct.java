@@ -1,4 +1,4 @@
-package com.moxs.gestionrepas.off;
+package com.moxs.gestionrepas.APIOff;
 
 public class OffProduct {
 

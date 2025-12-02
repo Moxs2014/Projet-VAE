@@ -1,6 +1,8 @@
-package com.moxs.gestionrepas;
+package com.moxs.gestionrepas.repository;
 
 import java.util.*;
+
+import com.moxs.gestionrepas.domain.Ingredient;
 
 /**
  * Simple in-memory implementation of IngredientRepository.
@@ -39,7 +41,7 @@ public class InMemoryIngredientRepository implements IngredientRepository {
         if (ingredient == null || ingredient.getName() == null) {
             throw new IllegalArgumentException("Ingredient and its name must not be null");
         }
-        // Key = lowercased name to avoid case sensitivity issues
+        /* Key = lowercased name to avoid case sensitivity issues */
         ingredients.put(ingredient.getName().toLowerCase(), ingredient);
         return ingredient;
     }

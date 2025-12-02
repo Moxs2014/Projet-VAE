@@ -3,6 +3,9 @@ package com.moxs.gestionrepas;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.moxs.gestionrepas.domain.*;
+import com.moxs.gestionrepas.catalog.*;
+
 public class StockIngredientsTest {
 
     private static final List<Ingredient> ingredients = new ArrayList<>();

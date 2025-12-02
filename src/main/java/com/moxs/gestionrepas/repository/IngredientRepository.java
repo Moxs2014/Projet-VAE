@@ -1,7 +1,9 @@
-package com.moxs.gestionrepas;
+package com.moxs.gestionrepas.repository;
 
 import java.util.List;
 import java.util.Optional;
+
+import com.moxs.gestionrepas.domain.Ingredient;
 
 /**
  * Contract for accessing ingredients regardless of where they are stored.

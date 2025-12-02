@@ -1,4 +1,4 @@
-package com.moxs.gestionrepas.off;
+package com.moxs.gestionrepas.APIOff;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,14 +17,14 @@ import java.net.http.HttpResponse;
  */
 public class OpenFoodFactsClient {
 
-    /** Base URL used by the OpenFoodFacts API. */
+    /* Base URL used by the OpenFoodFacts API. */
     private static final String BASE_URL_V0 =
-            "https://world.openfoodfacts.net/api/v2/product";
+            "https://world.openfoodfacts.org/api/v2/product/";
 
-    /** HTTP client used to send requests. */
+    /* HTTP client used to send requests. */
     private final HttpClient httpClient = HttpClient.newHttpClient();
 
-    /** Tool used to read and parse JSON returned by the API. */
+    /* Tool used to read and parse JSON returned by the API. */
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
@@ -36,22 +36,37 @@ public class OpenFoodFactsClient {
      * @throws IOException If a network issue occurs.
      * @throws InterruptedException If the request is interrupted.
      */
-    public String fetchProductJson(String barcode) throws IOException, InterruptedException {
+    public String fetchProductJson(String barcode) {
         String url = BASE_URL_V0 + barcode + ".json";
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .GET()
-                .uri(URI.create(url))
-                .build();
+     try {        
+            HttpRequest request = HttpRequest.newBuilder()
+                    .GET()
+                    .uri(URI.create(url))
+                    .build();
 
-        HttpResponse<String> response =
-                httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response =
+                    httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            
 
-        if (response.statusCode() != 200) {
-            System.out.println("Non-OK HTTP response: " + response.statusCode());
-        }
+            if (response.statusCode() != 200) {
+                System.out.println("Non-OK HTTP response: " + response.statusCode());
+                throw new RuntimeException ("HTTP error : " + response.statusCode());
+            }
 
         return response.body();
+
+        } catch (IOException | InterruptedException e) {
+            /* Specific handling for network issues or thread interruption */
+            if (e instanceof InterruptedException) {
+                Thread.currentThread().interrupt(); /** Required best practice */
+            }
+            throw new RuntimeException("Failed to call the OpenFoodFacts API", e);
+
+        } catch (Exception e) {
+            /* Fallback for any unexpected exception */
+            throw new RuntimeException("Unexpected error while calling the API", e);
+        }
     }
 
     /**
@@ -71,7 +86,7 @@ public class OpenFoodFactsClient {
      * @throws RuntimeException If the product is not found or JSON is invalid.
      */
     public OffProduct fetchProduct(String barcode) throws IOException, InterruptedException {
-        String json = fetchProductJson(barcode); // Reuse the first method
+        String json = fetchProductJson(barcode); /*  Reuse the first method */
 
         try {
             JsonNode root = objectMapper.readTree(json);
@@ -84,12 +99,12 @@ public class OpenFoodFactsClient {
             JsonNode product = root.path("product");
 
             String code = product.path("code").asText();
-            String name = product.path("product_name_fr").asText(
-                    product.path("product_name").asText()
+            String name = product.path("product_name").asText(
+                    product.path("product_name_fr").asText()
             );
             String brand = product.path("brands").asText();
-            String ingredientsText = product.path("ingredients_text_fr").asText(
-                    product.path("ingredients_text").asText()
+            String ingredientsText = product.path("ingredients_text").asText(
+                    product.path("ingredients_text_fr").asText()
             );
 
             return new OffProduct(code, name, brand, ingredientsText);

@@ -1,4 +1,4 @@
-package com.moxs.gestionrepas.off;
+package com.moxs.gestionrepas.APIOff;
 
 public class CatalogProduct {
 
@@ -8,11 +8,11 @@ public class CatalogProduct {
     private int shelfLifeDays;
     private String personalNote;
 
-    /**  Empty constructor */
+    /*  Empty constructor */
     public CatalogProduct() {
     }
 
-    /** Convenient constructor */
+    /* Convenient constructor */
     public CatalogProduct(String barcode, String name, String brand, int shelfLifeDays) {
         this.barcode = barcode;
         this.displayName = name;
@@ -20,7 +20,7 @@ public class CatalogProduct {
         this.shelfLifeDays = shelfLifeDays;
     }
 
-    /** Getters / Setters */
+    /* Getters / Setters */
     public String getBarcode() {
         return barcode;
     }

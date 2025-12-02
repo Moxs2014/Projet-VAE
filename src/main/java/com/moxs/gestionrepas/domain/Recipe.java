@@ -1,4 +1,5 @@
-package com.moxs.gestionrepas;
+package com.moxs.gestionrepas.domain;
+
 
 import java.util.Set;
 import java.util.HashSet;
@@ -169,16 +170,16 @@ public class Recipe {
     @Override
     public boolean equals(Object o) {
 
-        /** Same reference → same recipe */
+        /* Same reference → same recipe */
         if (this == o) return true;
 
-        /** We only compare Recipe instances */
+        /* We only compare Recipe instances */
         if (!(o instanceof Recipe)) return false;
 
-        /** Safe cast after instanceof: allows accessing Recipe properties */
+        /* Safe cast after instanceof: allows accessing Recipe properties */
         Recipe that = (Recipe) o;
 
-        /** Business rule: same name (ignore case) */
+        /* Business rule: same name (ignore case) */
         return this.name != null && this.name.equalsIgnoreCase(that.name);
     }
 

@@ -1,4 +1,5 @@
-package com.moxs.gestionrepas;
+package com.moxs.gestionrepas.domain;
+
 
 import java.util.HashSet;
 import java.util.Set;
@@ -61,7 +62,7 @@ public class Menu {
             return false;
         }
 
-        // Check if there is already a recipe of the same type
+        /*  Check if there is already a recipe of the same type */
         for (Recipe r : recipes) {
             if (r.getRecipeType() == recipe.getRecipeType()) {
                 System.out.println("There is already a recipe of this type.");
